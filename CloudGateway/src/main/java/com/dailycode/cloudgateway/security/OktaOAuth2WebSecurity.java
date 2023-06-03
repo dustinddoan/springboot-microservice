@@ -1,5 +1,5 @@
-package com.dailycode.cloudgateway.security;
-
+package com.dailycode.cloudgateway.security;//package com.dailycode.cloudgateway.security;
+//
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
@@ -24,6 +24,6 @@ public class OktaOAuth2WebSecurity {
         return http.build();
     }
 }
-
-// 9D8kWs62 dustin.dev.acc
-// Dq7W9c99 casper.com
+//
+//// 9D8kWs62 dustin.dev.acc
+//// Dq7W9c99 casper.com

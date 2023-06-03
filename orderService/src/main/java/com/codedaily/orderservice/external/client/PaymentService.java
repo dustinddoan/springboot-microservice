@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+
+// need to add INTERCEPTOR to handle request to PRODUCT-SERVICE/product
 @CircuitBreaker(name="external", fallbackMethod = "fallback")
 @FeignClient(name = "PAYMENT-SERVICE/payment")
 public interface PaymentService {

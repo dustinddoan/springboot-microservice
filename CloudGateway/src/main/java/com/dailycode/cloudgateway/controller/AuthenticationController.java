@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -27,8 +28,9 @@ public class AuthenticationController {
             Model model,
             @RegisteredOAuth2AuthorizedClient("okta") OAuth2AuthorizedClient client
     ) {
-
-        log.info("User: " + oidcUser);
+        log.info("---DUSTIN---User: " + oidcUser);
+        log.info("---DUSTIN---Attribute: ");
+        log.info(this.prettyPrintAttributes(oidcUser.getAttributes()));
         // hYTwH55Q
 
         AuthenticationResponse authenticationResponse = AuthenticationResponse.builder()
@@ -43,5 +45,16 @@ public class AuthenticationController {
                 .build();
 
         return new ResponseEntity<>(authenticationResponse, HttpStatus.OK);
+
+
+    }
+
+    private String prettyPrintAttributes(Map<String, Object> attributes) {
+        String acc = "User Attributes: <br/><div style='padding-left:20px'>";
+        for (String key : attributes.keySet()){
+            Object value = attributes.get(key);
+            acc += "<div>"+key + ":&nbsp" + value.toString() + "</div>";
+        }
+        return acc + "</div>";
     }
 }
