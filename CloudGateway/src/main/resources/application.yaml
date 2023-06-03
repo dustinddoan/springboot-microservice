@@ -55,5 +55,5 @@ okta:
     audience: api://default
     client-id: 0oa9s8330oCKK4EYo5d7
     client-secret: bxZADHRv0vejpDMIsLSwaAMe1Ir0p4TJGmb9zY1D
-    scopes: openid, profile, email, offline_access
+    scopes: openid, profile, email, offline_access, internal
     redirect-uri: /login/oauth2/code/okta

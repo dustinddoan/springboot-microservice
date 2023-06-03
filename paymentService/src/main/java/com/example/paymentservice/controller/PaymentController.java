@@ -16,7 +16,7 @@ public class PaymentController {
     @Autowired
     private PaymentService paymentService;
 
-    @PreAuthorize("hasAuthority('Customer')")
+//    @PreAuthorize("hasAuthority('Customer')")
     @PostMapping
     public ResponseEntity<Long> doPayment(@RequestBody PaymentRequest request) {
         long id = paymentService.doPayment(request);
@@ -24,7 +24,7 @@ public class PaymentController {
         return new ResponseEntity<>(id, HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasAuthority('Admin') || hasAuthority('Customer')")
+//    @PreAuthorize("hasAuthority('Admin') || hasAuthority('Customer')")
     @GetMapping("/order/{orderId}")
     public ResponseEntity<PaymentResponse> getPaymentDetailsByOrderId(@PathVariable String orderId) {
         PaymentResponse response = paymentService.getPaymentDetailsByOrderId(orderId);

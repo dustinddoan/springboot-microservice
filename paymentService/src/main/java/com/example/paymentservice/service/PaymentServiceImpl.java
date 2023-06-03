@@ -42,17 +42,15 @@ public class PaymentServiceImpl implements PaymentService {
     public PaymentResponse getPaymentDetailsByOrderId(String id) {
         log.info("Fetching transaction {}", id);
         TransactionDetails transactionDetails = transactionDetailsRepository
-                .findByOrderId(Long.valueOf(id));
+                .findByOrderId(Long.parseLong(id));
         log.info("Transaction details - : {}", transactionDetails);
 
-        PaymentResponse paymentResponse = PaymentResponse.builder()
+        return PaymentResponse.builder()
                 .status(transactionDetails.getPaymentStatus())
                 .amount(transactionDetails.getAmout())
                 .orderId(transactionDetails.getOrderId())
                 .paymentDate(transactionDetails.getPaymentDate())
                 .paymentMode(PaymentMode.valueOf(transactionDetails.getPaymentMode()))
                 .build();
-
-        return paymentResponse;
     }
 }
