@@ -11,13 +11,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 // need to add INTERCEPTOR to handle request to PRODUCT-SERVICE/product
 @FeignClient(name = "PAYMENT-SERVICE/payment")
-@CircuitBreaker(name="external", fallbackMethod = "fallback")
+@CircuitBreaker(name="external", fallbackMethod = "doPaymentFallback")
 public interface PaymentService {
     @PostMapping
     public ResponseEntity<Long> doPayment(@RequestBody PaymentRequest request);
 
 
-    default void fallback(Exception exception) {
+    default ResponseEntity<Long> doPaymentFallback(PaymentRequest request, Exception ex) {
+        // Fallback logic to handle the failure
         throw new CustomException("PaymentService is not available", "UNAVAILABLE", 500);
+//        return ResponseEntity.status(500).build();
     }
 }
