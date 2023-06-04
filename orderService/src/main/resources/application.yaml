@@ -33,7 +33,6 @@ spring:
           okta:
             issuer-uri: https://dev-86709474.okta.com/oauth2/default
 
-
 resilience4j:
   circuitbreaker:
     instances:

@@ -12,6 +12,7 @@ import com.codedaily.orderservice.model.OrderRequest;
 import com.codedaily.orderservice.repository.OrderRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -89,7 +90,9 @@ public class OrderServiceImpl implements OrderService {
                   "http://PRODUCT-SERVICE/product/" + order.getProductId(),
                   ProductResponse.class
                 );
+        assert productResponse != null;
         OrderResponse.ProductDetails productDetails = OrderResponse.ProductDetails.builder()
+                .productId(productResponse.getProductId())
                 .productName(productResponse.getProductName())
                 .quantity(productResponse.getQuantity())
                 .price(productResponse.getPrice())
@@ -102,6 +105,7 @@ public class OrderServiceImpl implements OrderService {
                   "http://PAYMENT-SERVICE/payment/order/" + order.getId(),
                   PaymentResponse.class
                 );
+        assert paymentResponse != null;
         OrderResponse.PaymentDetails paymentDetails = OrderResponse.PaymentDetails.builder()
                 .orderId(paymentResponse.getOrderId())
                 .status(paymentResponse.getStatus())

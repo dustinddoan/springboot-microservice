@@ -26,7 +26,7 @@ public class PaymentServiceImpl implements PaymentService {
         log.info("Recording transaction {}", request);
         TransactionDetails transactionDetails = TransactionDetails.builder()
                 .orderId(request.getOrderId())
-                .amout(request.getAmout())
+                .amout(request.getAmount())
                 .referenceNumber(request.getReferenceNumber())
                 .paymentMode(request.getPaymentMode().name())
                 .paymentDate(Instant.now())
