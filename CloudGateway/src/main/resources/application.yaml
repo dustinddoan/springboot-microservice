@@ -5,7 +5,7 @@ spring:
   application:
     name: API-GATEWAY
   config:
-    import: configserver:http://localhost:9296
+    import: configserver:http://${CONFIGURE_SERVER_URL:localhost}:9296
   cloud:
     gateway:
       routes:
@@ -57,3 +57,5 @@ okta:
     client-secret: bxZADHRv0vejpDMIsLSwaAMe1Ir0p4TJGmb9zY1D
     scopes: openid, profile, email, offline_access, internal
     redirect-uri: /login/oauth2/code/okta
+
+

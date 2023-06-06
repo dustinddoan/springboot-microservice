@@ -1,0 +1,26 @@
+version: '3'
+services:
+  serviceregistry:
+    image: 'taro03/serviceregistry:latest'
+    container_name: serviceregistry
+    ports:
+      - '8761:8761'
+  configserver:
+    image: 'taro03/configserver:latest'
+    container_name: configserver
+    ports:
+      - '9296:9296'
+    depends_on:
+      - serviceregistry
+    environment:
+      - EUREKA_SERVER_ADDRESS=http://serviceregistry:8761/eureka
+  cloudgateway:
+    image: 'taro03/cloudgateway:latest'
+    container_name: cloudgateway
+    ports:
+      - '8761:8761'
+    depends_on:
+      - configserver
+    environment:
+      - EUREKA_SERVER_ADDRESS=http://serviceregistry:8761/eureka
+      - CONFIGURE_SERVER_URL=http://configserver:9296
