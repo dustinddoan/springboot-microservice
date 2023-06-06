@@ -14,13 +14,21 @@ services:
       - serviceregistry
     environment:
       - EUREKA_SERVER_ADDRESS=http://serviceregistry:8761/eureka
+    healthcheck:
+      test: ["CMD", "curl", "http://configserver:9296/actuator/healthcheck"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
   cloudgateway:
     image: 'taro03/cloudgateway:latest'
     container_name: cloudgateway
     ports:
-      - '8761:8761'
-    depends_on:
-      - configserver
+      - '9090:9090'
     environment:
       - EUREKA_SERVER_ADDRESS=http://serviceregistry:8761/eureka
-      - CONFIGURE_SERVER_URL=http://configserver:9296
+      - CONFIGURE_SERVER_URL=configserver
+      - PRINT_EUREKA_SERVER_ADDRESS=$${EUREKA_SERVER_ADDRESS:http://localhost:8761/eureka}
+      - PRINT_CONFIGURE_SERVER_URL=$${CONFIGURE_SERVER_URL=configserver}
+    depends_on:
+      configserver:
+        condition: service_healthy
