@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.dailycode</groupId>
     <artifactId>service-registry</artifactId>
-    <version>0.0.1</version>
+    <version>latest</version>
     <name>service-registry</name>
     <description>service-registry</description>
     <properties>
