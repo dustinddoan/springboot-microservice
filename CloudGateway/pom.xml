@@ -114,7 +114,7 @@
                         <image>openjdk:11</image>
                     </from>
                     <to>
-                        <image>registry.hub.docker.com/taro03/serviceregistry</image>
+                        <image>registry.hub.docker.com/taro03/cloudgateway</image>
                         <tags>${project.version}</tags>
                     </to>
                 </configuration>
