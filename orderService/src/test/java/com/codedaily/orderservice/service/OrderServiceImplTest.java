@@ -11,13 +11,16 @@ import com.codedaily.orderservice.model.OrderRequest;
 import com.codedaily.orderservice.model.OrderResponse;
 import com.codedaily.orderservice.model.PaymentMode;
 import com.codedaily.orderservice.repository.OrderRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.Instant;
@@ -44,6 +47,20 @@ public class OrderServiceImplTest {
     @InjectMocks
     OrderService orderService = new OrderServiceImpl();
 
+    @Value(value = "${microservices.product}")
+    private String productServiceUrl;
+
+    @Value(value = "${microservices.payment}")
+    private String paymentServiceUrl;
+
+    @BeforeEach
+    public void setup() {
+        ReflectionTestUtils
+                .setField(orderService, "productServiceUrl", productServiceUrl);
+
+        ReflectionTestUtils
+                .setField(orderService, "paymentServiceUrl", paymentServiceUrl);
+    }
 
     @DisplayName("Test_When_Order_Success")
     @Test
@@ -54,13 +71,13 @@ public class OrderServiceImplTest {
 
         ProductResponse productResponse = getMockProductResponse();
         when(restTemplate.getForObject(
-                "http://PRODUCT-SERVICE/product/" + order.getProductId(),
+                productServiceUrl + order.getProductId(),
                 ProductResponse.class
         )).thenReturn(productResponse);
 
         PaymentResponse paymentResponse = getMockPaymentResponse();
         when(restTemplate.getForObject(
-                "http://PAYMENT-SERVICE/payment/order/" + order.getId(),
+                paymentServiceUrl + "order/" + order.getId(),
                 PaymentResponse.class
         )).thenReturn(paymentResponse);
 
@@ -69,9 +86,9 @@ public class OrderServiceImplTest {
 
         // verification
         verify(orderRepository, times(1)).findById(anyLong());
-        verify(restTemplate, times(1)).getForObject("http://PRODUCT-SERVICE/product/" + order.getProductId(),
+        verify(restTemplate, times(1)).getForObject(productServiceUrl + order.getProductId(),
                 ProductResponse.class);
-        verify(restTemplate, times(1)).getForObject("http://PAYMENT-SERVICE/payment/order/" + order.getId(),
+        verify(restTemplate, times(1)).getForObject(paymentServiceUrl + "order/" + order.getId(),
                 PaymentResponse.class);
 
         // assert

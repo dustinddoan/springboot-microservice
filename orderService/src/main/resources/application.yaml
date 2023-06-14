@@ -15,7 +15,7 @@ spring:
   application:
     name: ORDER-SERVICE
   config:
-    import: configserver:${CONFIG_SERVER_URL:http://localhost:9296}
+    import: optional:configserver:${CONFIG_SERVER_URL:http://localhost:9296}
   security:
     oauth2:
       resourceserver:
@@ -33,6 +33,7 @@ spring:
           okta:
             issuer-uri: https://dev-86709474.okta.com/oauth2/default
 
+
 feign:
   circuitbreaker:
     enabled: true
@@ -48,6 +49,10 @@ resilience4j:
         wait-duration-in-open-state: 3
         sliding-window-size: 10
         sliding-window-type: COUNT_BASED
+
+microservices:
+  product: http://product-service-svc/product/
+  payment: http://payment-service-svc/payment/
 
 
 #eureka:

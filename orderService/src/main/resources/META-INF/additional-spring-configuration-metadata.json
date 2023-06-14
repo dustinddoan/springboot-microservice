@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "microservices.product",
+      "type": "java.lang.String",
+      "description": "Description for microservices.product."
+  }
+] }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 // need to add INTERCEPTOR to handle request to PRODUCT-SERVICE/product
-@FeignClient(name = "PAYMENT-SERVICE/payment")
+@FeignClient(name = "payment", url="${microservices.payment}")
 @CircuitBreaker(name="external", fallbackMethod = "doPaymentFallback")
 public interface PaymentService {
     @PostMapping

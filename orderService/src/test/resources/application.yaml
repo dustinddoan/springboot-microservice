@@ -14,6 +14,7 @@ spring:
     name: ORDER-SERVICE
   config:
     import: optional:configserver:http://localhost:9296
+    enabled: false
   security:
     oauth2:
       resourceserver:
@@ -31,6 +32,7 @@ spring:
           okta:
             issuer-uri: https://dev-86709474.okta.com/oauth2/default
 
-eureka:
-  client:
-    enabled: false
+
+microservices:
+  product: http://product-service-svc/product/
+  payment: http://payment-service-svc/payment/
